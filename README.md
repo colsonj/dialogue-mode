@@ -8,6 +8,39 @@ It processes **every app's audio** (Netflix, Stremio, Plex, local files and so o
 Android's built-in `DynamicsProcessing` effect to the global output mix (audio session 0).
 It adds about 10 ms of latency, so lip sync isn't affected.
 
+## Install on your TV (no computer needed)
+
+Takes about 10 minutes, using the TV remote only.
+
+1. **Install Downloader.** On the TV, open the Google Play Store, search for **Downloader**
+   (by AFTVnews) and install it.
+2. **Allow Downloader to install apps.** Go to **Settings → Apps → Security & restrictions →
+   Unknown sources** and turn on **Downloader**.
+   - Can't see *Unknown sources*? On Google TV it's hidden until developer mode is on. Go to
+     **Settings → System → About** and click **Android TV OS build** 7 times, then look again.
+3. **Download the app.** Open Downloader, select the address box and type:
+   ```
+   github.com/colsonj/dialogue-mode/releases/latest/download/dialogue-mode.apk
+   ```
+   Then press **Go**. This link always gets the newest version.
+4. **Install.** When asked, choose **Install**.
+   - Google Play Protect may warn that the app is from an unknown developer, or block it. This
+     happens to any app that isn't from the Play Store. Choose **More details → Install anyway**.
+     The full source code is in this repository if you want to check what it does.
+   - Downloader may offer to delete the downloaded file afterwards. That's fine; the app stays
+     installed.
+5. **Open Dialogue Mode** from your apps list once. It starts working straight away and starts
+   itself again after a restart.
+6. **Set up your box's audio settings** as described in
+   [Google TV Streamer settings](#google-tv-streamer-settings-tested), then press **Check TV
+   box settings** in the app to confirm.
+
+Using a soundbar or surround system? Read
+[Soundbars and surround systems](#soundbars-and-surround-systems) first.
+
+To **update**, repeat step 3. Your settings are kept. To **remove** it, uninstall it like any
+other app.
+
 ## How it works
 
 ```
@@ -87,20 +120,17 @@ Multichannel support (processing 5.1 PCM, with a proper centre-channel boost) is
 It would need eARC or a receiver that accepts multichannel PCM. It's also untested whether the
 box routes multichannel audio through the effect at all.
 
-## Install
+## Install with adb (for developers)
 
-Download or build `dialogue-mode.apk`, then either:
+```
+adb pair <ip>:<pairing-port> <code>      # Developer options → Wireless debugging
+adb connect <ip>:<port>
+adb install -r dialogue-mode.apk
+adb shell am start -n local.dialoguemode/.MainActivity
+```
 
-- **adb** (Developer options → Wireless debugging):
-  ```
-  adb pair <ip>:<pairing-port> <code>
-  adb connect <ip>:<port>
-  adb install -r dialogue-mode.apk
-  ```
-- or sideload it with an app such as *Downloader*.
-
-Open **Dialogue Mode** from the apps row once. After that it runs as a foreground service and
-starts again after a reboot or app update.
+After it has been opened once, it runs as a foreground service and starts again after a reboot
+or app update.
 
 ## Using it
 
@@ -168,6 +198,9 @@ You don't need Gradle. The build uses the raw SDK tools:
 export ANDROID_HOME=~/android-sdk     # default if unset
 ./build.sh                            # → build/dialogue-mode.apk
 ```
+
+When publishing a release, attach the APK twice: once as `dialogue-mode-<version>.apk` and once
+as plain `dialogue-mode.apk`. The plain name is what the short "latest" install link points to.
 
 On the first build, `build.sh` creates a local signing key, `keystore.jks`. It is git-ignored.
 Keep it: an installed copy can only be updated by an APK signed with the same key.
