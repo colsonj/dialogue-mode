@@ -19,14 +19,13 @@ public class MainActivity extends Activity {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Params params;
     private Button power, preset, lift, bass;
-    private TextView status;
+    private TextView status, setup;
 
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setGravity(Gravity.CENTER_HORIZONTAL);
         root.setPadding(96, 64, 96, 48);
         root.setBackgroundColor(Color.rgb(16, 24, 40));
 
@@ -41,23 +40,47 @@ public class MainActivity extends Activity {
                 + "Left/right on a setting changes it.");
         hint.setTextSize(16);
         hint.setTextColor(Color.rgb(170, 190, 220));
-        hint.setPadding(0, 8, 0, 32);
+        hint.setPadding(0, 8, 0, 24);
         root.addView(hint);
 
-        power = addButton(root, v -> {
+        // Controls on the left, status and settings check on the right.
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        root.addView(row);
+
+        LinearLayout controls = new LinearLayout(this);
+        controls.setOrientation(LinearLayout.VERTICAL);
+        row.addView(controls, new LinearLayout.LayoutParams(820,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        power = addButton(controls, v -> {
             params.enabled = !params.enabled;
             push(false);
         }, null);
-        preset = addButton(root, v -> step(preset, 1), d -> step(preset, d));
-        lift = addButton(root, v -> step(lift, 1), d -> step(lift, d));
-        bass = addButton(root, v -> step(bass, 1), d -> step(bass, d));
-        addButton(root, v -> push(true), null).setText("Re-attach effect");
+        preset = addButton(controls, v -> step(preset, 1), d -> step(preset, d));
+        lift = addButton(controls, v -> step(lift, 1), d -> step(lift, d));
+        bass = addButton(controls, v -> step(bass, 1), d -> step(bass, d));
+        addButton(controls, v -> push(true), null).setText("Re-attach effect");
+        addButton(controls, v -> setup.setText(SetupCheck.run(this)), null)
+                .setText("Check TV box settings");
+
+        LinearLayout info = new LinearLayout(this);
+        info.setOrientation(LinearLayout.VERTICAL);
+        info.setPadding(64, 12, 0, 0);
+        row.addView(info, new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
 
         status = new TextView(this);
-        status.setTextSize(15);
+        status.setTextSize(16);
         status.setTextColor(Color.rgb(140, 200, 140));
-        status.setPadding(0, 32, 0, 0);
-        root.addView(status);
+        info.addView(status);
+
+        setup = new TextView(this);
+        setup.setTextSize(16);
+        setup.setTextColor(Color.rgb(220, 220, 220));
+        setup.setLineSpacing(8f, 1f);
+        setup.setPadding(0, 24, 0, 0);
+        info.addView(setup);
 
         setContentView(root);
         power.requestFocus();
@@ -90,8 +113,8 @@ public class MainActivity extends Activity {
                 return false;
             });
         }
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(900,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.topMargin = 12;
         root.addView(btn, lp);
         return btn;

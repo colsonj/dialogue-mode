@@ -77,6 +77,10 @@ The settings screen works with the remote. Press left/right on a row to change i
 | Voice boost | 0 to +9 dB (default +2) |
 | Bass cut | 0 to -12 dB (default -3) |
 
+**Check TV box settings** reads the box's audio settings and marks each one ✓ or ⚠. It only
+reads; it never changes anything. Android 12+ hides Google's Dolby settings (volume leveller,
+dialogue enhancer, output format) from apps, so for those it shows where to check by hand.
+
 The defaults were tuned by ear for TV speakers. Use Max for films and Strong or Medium for
 TV shows that are already mixed loud.
 
