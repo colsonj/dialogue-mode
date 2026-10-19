@@ -51,6 +51,42 @@ Global (session 0) effects are deprecated in Android, but they still work on man
 Some firmware may ignore them, or route certain apps through a direct or tunnelled output that
 skips the mixer. To check, see [Verifying](#verifying).
 
+### Soundbars and surround systems
+
+The app can only process audio the box decodes itself. That means it outputs **stereo only**.
+Whether that's a good trade depends on your setup.
+
+**TV speakers:** use the settings above. This is what the app was tuned for.
+
+**Stereo soundbar, or a soundbar with a subwoofer / virtual surround:** recommended. Use the
+same box settings (Surround sound **None**, Output format **PCM stereo**), then:
+
+| Setting | Suggestion |
+|---|---|
+| Soundbar night mode / voice mode | **Off** to start, so they don't stack with the app. Re-try them once you've tuned it |
+| Soundbar virtual surround / upmix | Fine to leave on; it works on the stereo signal it receives |
+| Evening strength | **Strong** to start. Soundbars handle peaks better than TV speakers |
+| Bass cut | **-3 dB or more** in an apartment (subwoofers carry through walls), otherwise **0** |
+| Voice boost | **0 to +2 dB**. Most soundbars already have a forward midrange |
+
+You give up Dolby decoding on the soundbar. On a basic bar that hardly matters. On a good
+Atmos bar it does, so see below.
+
+**AV receiver with real 5.1/7.1 speakers, or a high-end Atmos soundbar: not recommended.**
+Surround sound **None** would reduce everything to stereo. Use the receiver's or soundbar's
+own tools instead. They work on the original Dolby audio and lose nothing:
+
+- **Night mode / DRC / dynamic range "Auto"** uses compression data the film's mixers built
+  into Dolby audio.
+- **Centre channel level +3 to +6 dB** lifts only the dialogue channel. This is a real dialogue
+  boost, which a stereo app can't do.
+- **Dynamic volume** features, such as Audyssey Dynamic Volume or Sonos Night Sound plus
+  Speech Enhancement.
+
+Multichannel support (processing 5.1 PCM, with a proper centre-channel boost) isn't implemented.
+It would need eARC or a receiver that accepts multichannel PCM. It's also untested whether the
+box routes multichannel audio through the effect at all.
+
 ## Install
 
 Download or build `dialogue-mode.apk`, then either:
