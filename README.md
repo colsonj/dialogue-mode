@@ -130,7 +130,10 @@ adb shell am start -n local.dialoguemode/.MainActivity
 ```
 
 After it has been opened once, it runs as a foreground service and starts again after a reboot
-or app update.
+or app update. Both were tested on the Google TV Streamer.
+
+Wireless debugging switches itself off when the box restarts, and comes back on a new port when
+you turn it on again. Pairing is remembered, so only `adb connect` with the new port is needed.
 
 ## Using it
 
