@@ -8,6 +8,10 @@ It processes **every app's audio** (Netflix, Stremio, Plex, local files and so o
 Android's built-in `DynamicsProcessing` effect to the global output mix (audio session 0).
 It adds about 10 ms of latency, so lip sync isn't affected.
 
+> **AI disclaimer:** This was vibe coded: I'm not a software developer, and I built it with
+> Claude Code. If you're against AI-made software, no hard feelings; feel free to skip it.
+> If not, I hope it helps.
+
 ## Install on your TV (no computer needed)
 
 Takes about 10 minutes, using the TV remote only.
