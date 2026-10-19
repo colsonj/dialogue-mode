@@ -150,6 +150,37 @@ dialogue enhancer, output format) from apps, so for those it shows where to chec
 The defaults were tuned by ear for TV speakers. Use Max for films and Strong or Medium for
 TV shows that are already mixed loud.
 
+## Troubleshooting
+
+| Problem | Try |
+|---|---|
+| No difference with it on or off | Press **Check TV box settings** and fix anything marked ⚠. Surround sound must be **None**, otherwise Dolby audio bypasses the effect. Then press **Re-attach effect** |
+| Works in some apps but not others | That app is probably sending Dolby or using a direct output. Make sure Surround sound is **None**, then restart the app |
+| Thin or tinny sound | Turn off the box's own Volume leveller and Dialogue enhancer (and any soundbar voice mode). Lower Voice boost and Bass cut |
+| Squashed, flat or "pumping" sound | Lower Evening strength (Strong or Medium) |
+| Loud parts still too loud | Raise Evening strength to Max |
+| Everything is louder when it's on | Expected: makeup gain lifts quiet parts. Turn the TV down a notch once |
+| Stopped working after a restart or update | Open Dialogue Mode once; the status should say *Attached to global output* |
+
+## Privacy
+
+The app has **no internet permission**, so it can't send or receive anything. It stores only its
+own settings on the device. Its only audio permission is `MODIFY_AUDIO_SETTINGS`, which it needs
+to attach the effect. It has no microphone or recording permission and can't capture audio.
+
+## Known limitations
+
+- **Tested on one device** (Google TV Streamer, Android 14). Other boxes should work if they
+  allow global audio effects, but that isn't guaranteed.
+- It relies on attaching effects to the **global output mix**. Android has deprecated this, so a
+  future system update could stop it working.
+- **Stereo only.** See [Soundbars and surround systems](#soundbars-and-surround-systems).
+- It can't separate dialogue from music once an app has downmixed to stereo. It evens out
+  loudness and lifts the speech frequencies, which helps a lot, but it isn't a true centre
+  channel boost.
+- Changing **Evening strength** resets the compressor settings to that preset. Voice boost and
+  Bass cut are kept.
+
 ## Remote tuning over adb
 
 The service accepts parameters from `adb shell`. It is exported behind the `DUMP` permission,
