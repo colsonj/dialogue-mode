@@ -27,13 +27,25 @@ that downmix, so it relies on compression plus EQ instead.
 ## Requirements and setup
 
 - Android 9+ (API 28). Tested on a **Google TV Streamer (Android 14)** driving TV speakers.
-- The box must output **PCM**, not Dolby/DTS bitstream. If compressed audio is passed straight
-  through to the TV or soundbar, Android never decodes it and can't process it. On Google TV:
-  **Settings → Display & Sound → Audio**
-  - Surround sound: **Never**
-  - Output format: **PCM stereo** (if offered)
-- Turn **off** any built-in "volume leveller" or "dialogue enhancer" on the box. Stacking them
-  with this app made the sound thin and tinny.
+- Apps must hand the box **decoded PCM** audio. If an app is allowed to send compressed Dolby
+  (AC-3 / E-AC-3), that audio skips the mixer the effect sits on, and Dialogue Mode does nothing.
+- Turn **off** any built-in volume leveller or dialogue enhancer. Stacking them with this app
+  made the sound thin and tinny.
+
+### Google TV Streamer settings (tested)
+
+**Settings → Display and sound**, under **SOUND**:
+
+| Setting | Value | Why |
+|---|---|---|
+| System sounds | **Off** | The app's makeup gain (up to +16 dB) makes menu clicks loud |
+| Audio options → Volume leveller | **Off** | Conflicts with the app's compressor |
+| Audio options → Dialogue enhancer | **Off** | Stacks with the app's voice EQ and sounds tinny |
+| Audio options → Output format | **PCM stereo** | The box sends decoded stereo to the TV |
+| Surround sound settings | **None** ("Never use surround sound") | Makes every app decode to PCM so the effect always applies. *Automatic* lets apps such as Netflix send Dolby, which bypasses it |
+
+Other Android TV boxes have similar settings under different names. The important ones are
+surround sound / passthrough set to never or off, and PCM output.
 
 Global (session 0) effects are deprecated in Android, but they still work on many devices.
 Some firmware may ignore them, or route certain apps through a direct or tunnelled output that
