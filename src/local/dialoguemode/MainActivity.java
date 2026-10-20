@@ -120,16 +120,20 @@ public class MainActivity extends Activity {
         return btn;
     }
 
+    /** Steps a row up or down; stops at either end of the range rather than wrapping. */
     private void step(Button which, int dir) {
         if (which == preset) {
-            int n = Params.PRESET_NAMES.length;
-            params.applyPreset(((params.preset + dir) % n + n) % n);
+            int p = params.preset + dir;
+            if (p < 0 || p >= Params.PRESET_NAMES.length) return;
+            params.applyPreset(p);
         } else if (which == lift) {
             float v = params.lift + 1.5f * dir;
-            params.lift = v > 9f ? 0f : v < 0f ? 9f : v;
+            if (v < 0f || v > 9f) return;
+            params.lift = v;
         } else if (which == bass) {
             float v = params.bassCut - 3f * dir;
-            params.bassCut = v < -12f ? 0f : v > 0f ? -12f : v;
+            if (v < -12f || v > 0f) return;
+            params.bassCut = v;
         }
         push(false);
     }

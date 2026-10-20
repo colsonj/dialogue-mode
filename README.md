@@ -141,7 +141,8 @@ you turn it on again. Pairing is remembered, so only `adb connect` with the new 
 
 ## Using it
 
-The settings screen works with the remote. Press left/right on a row to change it.
+The settings screen works with the remote. Press left/right on a row to change it;
+it stops at either end of the range.
 
 | Control | Options |
 |---|---|
